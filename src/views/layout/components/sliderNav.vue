@@ -16,7 +16,7 @@
         欢迎丁绪波
         <a-icon type="down" />
       </li>
-      <li>退出</li>
+      <li @click="handleBack">退出</li>
     </ul>
   </div>
 </template>
@@ -31,6 +31,12 @@ export default {
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
     },
+    handleBack(){
+    this.$router.push({
+      name:'login'
+    })
+  }
   },
+  
 };
 </script>
