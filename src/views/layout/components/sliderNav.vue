@@ -13,7 +13,7 @@
     </div>
     <ul class="user-info">
       <li>
-        欢迎丁绪波
+        {{ userInfo.username }}
         <a-icon type="down" />
       </li>
       <li @click="handleBack">退出</li>
@@ -21,22 +21,30 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 export default {
   data() {
     return {
     };
+  },
+  computed: {
+    ...mapState(["userInfo"])
   },
   methods: {
     //此方法用于修改state 中collapsed值 用于切换菜单的闭合状态  false 代表不闭合  true代表闭合
     toggleCollapsed() {
       this.$store.dispatch('changeCollapsed');
     },
-    handleBack(){
-    this.$router.push({
-      name:'login'
-    })
-  }
+    handleBack() {
+      //清除 state 和 cookie数据
+      this.$store.dispatch('logOut');
+      //跳转到login路由
+      this.$router.push({
+        name: 'login'
+      })
+      
+    }
   },
-  
+
 };
 </script>

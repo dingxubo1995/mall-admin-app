@@ -20,6 +20,7 @@
 </template>
 <script>
 import api from '@/api/user'
+
 export default {
     data() {
         //邮箱校验规则
@@ -65,7 +66,9 @@ export default {
             this.$refs[formName].validate(valid => {
                 if (valid) {
                     api.login(this.loginForm).then((res) => {
-                        console.log('@@@', res);
+                       /*  console.log('@@@', res); */
+                        //拿到返回的登录信息，将登录信息保存到store里面
+                        this.$store.dispatch('setUserInfo', res);
                         //拿到请求成功的数据（该数据经过axios拦截加工返回）设置路由跳转到路由名为home
                         this.$router.push({
                             name: 'home'
