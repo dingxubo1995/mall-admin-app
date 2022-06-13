@@ -1,6 +1,6 @@
 <template>
   <div class="menu-list">
-    <a-menu :default-selected-keys="['1']" :default-open-keys="['sub1']" mode="inline" theme="dark"
+    <a-menu :default-selected-keys="['1']" :default-open-keys="['sub1','sub2']" mode="inline" theme="dark"
       :inline-collapsed="$store.state.collapsed">
       <a-sub-menu key="sub1">
         <span slot="title">

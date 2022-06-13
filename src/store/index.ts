@@ -45,7 +45,6 @@ export default new Vuex.Store({
       cookie.remUserCookie()
       //state里面的状态清理掉
       commit('logOut');
-
     }
   },
   modules: {
