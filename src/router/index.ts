@@ -65,7 +65,7 @@ router.beforeEach((to: RouteMeta, from, next) => {
     //但是我有信息
     if (store.state.userInfo.appkey) {
       //去之前要看看权限
-
+      
       //去你指定的权限路由吧
       next()
       //我的用户信息丢了
