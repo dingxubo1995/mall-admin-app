@@ -70,6 +70,7 @@ router.beforeEach((to: RouteMeta, from, next) => {
     if (store.state.userInfo.appkey) {
       //去之前要看看权限
       const routesAllow = getMenuRoute(asyncRoutes, store.state.userInfo.role)
+      //筛选掉不显示的
       const routesShow = routes.filter((r: any) => {
         return r.meta.hidden !== true
       })

@@ -1,9 +1,9 @@
 <template>
   <div class="menu-list">
-    <a-menu :default-selected-keys="['1']" :default-open-keys="['sub1', 'sub2']" mode="inline" theme="dark"
+    <a-menu :default-selected-keys="[$router.currentRoute.matched[1]?$router.currentRoute.matched[1].name:'']" :default-open-keys="[$router.currentRoute.matched[0].name]" mode="inline" theme="dark"
       :inline-collapsed="$store.state.collapsed">
 
-      <a-sub-menu key="sub1" v-for="route in $store.state.resultMenu" :key="route.name">
+      <a-sub-menu key="sub1" v-for="route in $store.state.resultMenu" :key="route.name" >
         <template v-if="!route.meta.hidden">
           <span slot="title">
             <a-icon :type="route.meta.icontype" />
@@ -51,7 +51,8 @@ export default {
 
   },
   mounted() {
-    this.$store.state.resultMenu.map(i => console.log(i.children))
+    console.log(this.$router);
+    
   }
 };
 </script>
