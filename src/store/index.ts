@@ -10,7 +10,8 @@ export default new Vuex.Store({
     collapsed: false,
     //保存login登录状态信息
     //整个逻辑是 logIn页面输入正确信息，异步返回用户信息 把信息保存在cookie上 state读取cookie上的用户信息
-    userInfo: cookie.getUserCookie()
+    userInfo: cookie.getUserCookie(),
+    resultMenu: []
   },
   //修改state中的数据
   mutations: {
@@ -28,6 +29,10 @@ export default new Vuex.Store({
         role: '',
         username: ''
       }
+    },
+    //设置角色通过的路由对象
+    roleAllowRoutes(state, routes) {
+      state.resultMenu = routes
     }
   },
   //响应组件中的动作
@@ -45,6 +50,9 @@ export default new Vuex.Store({
       cookie.remUserCookie()
       //state里面的状态清理掉
       commit('logOut');
+    },
+    roleAllowRoutes({ commit }, routes) {
+      commit('roleAllowRoutes', routes)
     }
   },
   modules: {

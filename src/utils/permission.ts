@@ -31,15 +31,12 @@ const roleToRoute = {
  */
 
 export default function getMenuRoute(routes, role) {
-
     //通过的路由名称数组
     const allowRouteName = roleToRoute[role].map((item) => item.name)
-
     //对路由进行筛选 
     const resultRoutes = routes.filter(r => {
         if (allowRouteName.indexOf(r.name) !== -1) {
             const children = r.children
-
             r.children = children.filter(s => allowRouteName.indexOf(s.name) !== -1);
             return true
         }
