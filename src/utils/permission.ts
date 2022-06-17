@@ -5,7 +5,7 @@
 
 const roleToRoute = {
     //用户权限
-    'customer': [{
+    'coustomer': [{
         name: 'product'
     }, {
         name: 'list'
