@@ -47,13 +47,7 @@
 
 <script>
 export default {
-  watch: {
-
-  },
-  mounted() {
-    console.log(this.$router);
-    
-  }
+ 
 };
 </script>
 <style lang="less">

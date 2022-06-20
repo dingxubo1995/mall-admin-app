@@ -5,9 +5,9 @@
     </a-button>
     <div class="breadcrumb">
       <a-breadcrumb>
-        <a-breadcrumb-item>首页</a-breadcrumb-item>
+        <a-breadcrumb-item>{{ $router.currentRoute.matched[0].meta.title }}</a-breadcrumb-item>
         <a-breadcrumb-item>
-          <a href>sss</a>
+          <router-link :to="{name:this.$route.name}">{{ currentTitle }}</router-link>
         </a-breadcrumb-item>
       </a-breadcrumb>
     </div>
@@ -25,6 +25,7 @@ import { mapState } from 'vuex'
 export default {
   data() {
     return {
+      currentTitle: ''
     };
   },
   computed: {
@@ -42,9 +43,18 @@ export default {
       this.$router.push({
         name: 'login'
       })
-      
     }
   },
-
+  //监听当前的路由状态，获取到meta中的title值
+  watch: {
+    $route: {
+      handler: function (val, oldVal) {
+        this.currentTitle = this.$route.meta.title
+    
+      },
+      // 深度观察监听
+      immediate: true
+    }
+  },
 };
 </script>
