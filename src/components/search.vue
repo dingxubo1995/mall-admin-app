@@ -7,9 +7,9 @@
             </a-form-model-item>
 
             <a-form-model-item label="商品类目">
-                <a-select show-search placeholder="请选择商品类目" style="width: 200px" 
-                    @change="handleChange">
-                    <a-select-option v-for="c in searchForm.category" :key="c.id" value="c.id">{{ c.name }}</a-select-option>
+                <a-select show-search placeholder="请选择商品类目" style="width: 200px" @change="handleChange" allowClear>
+                    <a-select-option v-for="c in categoryList" :key="c.id" :value="c.id">{{ c.name }}
+                    </a-select-option>
                 </a-select>
             </a-form-model-item>
 
@@ -32,22 +32,26 @@ export default {
         };
     },
     created() {
-        api.list().then(res => { console.log(res); })
+        api.list().then(res => { this.categoryList = res.data })
+
+
     },
     methods: {
         //提交表单
-        handleSubmit(e) {
-            console.log(this.searchForm);
+        handleSubmit() {
+            this.$emit('searchProduct', this.searchForm)
+            
         },
         //切换类目
-        handleChange() {
-
+        handleChange(val) {
+            console.log(val);
+            this.searchForm.category = val
         }
     },
 };
 </script>
 <style>
-.search-box{
+.search-box {
     padding: 10px 30px;
 }
 </style>

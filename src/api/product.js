@@ -1,6 +1,6 @@
-/* import axios from '../axios'
+import axios from '../axios'
 export default {
-    cate(params) {
-        return axios.post('/passport/login', params)
+    productsAll(params) {
+        return axios.get('/products/all', { params })
     }
-} */
+}
