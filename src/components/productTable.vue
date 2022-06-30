@@ -1,5 +1,5 @@
 <template>
-    <a-table :columns="columns" :data-source="tableData">
+    <a-table :columns="columns" :data-source="tableData" :pagination="page" @change="changeTable">
         <div slot="operation">
             <a-button>编辑</a-button>
             <a-button>删除</a-button>
@@ -8,6 +8,7 @@
     </a-table>
 </template>
 <script>
+
 const columns = [
     {
         title: 'id',
@@ -29,9 +30,18 @@ const columns = [
     },
     {
         title: '类目',
-        dataIndex: 'category',
-        key: 'address category',
-
+        dataIndex: 'categoryName',
+        key: 'category',
+        /* customRender: function (text, record) {
+            console.log(record.category);
+            let name = ''
+            this.categoryList.forEach(c => {
+                if (c.id === record.category) {
+                    name = c.name
+                }
+            });
+            return name
+        } */
     },
     {
         title: '预售价格',
@@ -77,17 +87,30 @@ export default {
     data() {
         return {
             columns,
+            pagination: {
+                current: 1,
+                pageSize: 10,
+                showSizeChanger: true,
+                total: 1
+            }
         };
     },
-    props: ['data'],
-    computed:{
-        tableData(){
+    props: ['data', 'page'],
+    computed: {
+        //给数据添加key值
+        tableData() {
             return this.data.map((item) => {
                 return {
                     ...item,
-                    key:item.id
+                    key: item.id
                 }
             })
+        }
+    },
+    methods: {
+        changeTable(page) {
+            console.log(page);
+            this.$emit('change', page);
         }
     }
 };

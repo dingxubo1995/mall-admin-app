@@ -2,9 +2,9 @@
   <!-- 这是商品列表页面 -->
   <div class="product-list">
     <!-- 搜索 -->
-    <Search @searchProduct="handleSearchProduct" />
+    <Search @searchProduct="handleSearchProduct" :categoryList="categoryList" />
     <!-- 表格 -->
-    <Table :data="tableData" />
+    <Table :data="tableData" :page="page" @change="changePage"/>
   </div>
 </template>
 
@@ -12,6 +12,7 @@
 import Search from '@/components/search.vue'
 import Table from '@/components/productTable.vue'
 import api from '@/api/product'
+import apiCategory from '@/api/category'
 export default {
   components: {
     Search,
@@ -20,10 +21,25 @@ export default {
   data() {
     return {
       tableData: [],
-      searchForm: []
+      searchForm: [],
+      //配置初始化页码翻页信息
+      page: {
+        current: 2,
+        pageSize: 10,
+        showSizeChanger: true,
+        total: 1
+      },
+      categoryList: [],
+      categoryObj: {}
     }
   },
-  created(){
+  async created() {
+    await apiCategory.list().then(res => {
+      this.categoryList = res.data;
+      res.data.forEach(item => {
+          this.categoryObj[item.id] = item
+      });
+    })
     this.getTableData()
   },
   methods: {
@@ -31,15 +47,27 @@ export default {
     handleSearchProduct(form) {
       this.searchForm = form
     },
-    //获取商品信息
+    //异步获取商品信息
     async getTableData() {
       const result = await api.productsAll({
-        page: 1,
-        size: 10,
+        //配置请求参数
+        page: this.page.current,
+        size: this.page.pageSize,
         searchWord: this.searchForm.searchWord,
       })
-     /*  console.log(result); */
-      this.tableData =result.data
+      this.tableData = result.data.map(item => {
+     /*    console.log(item,this.categoryObj); */
+        return{
+          ...item,
+          categoryName: this.categoryObj[item.category].name
+        }
+      })
+      /* console.log(result); */
+      this.page.total = result.total
+    },
+    changePage(page) {
+      this.page = page,
+        this.getTableData()
     }
   }
 }

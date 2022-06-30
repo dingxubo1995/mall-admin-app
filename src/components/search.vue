@@ -20,27 +20,27 @@
     </div>
 </template>
 <script>
-import api from '@/api/category'
+
 export default {
+    props: ['categoryList'],
     data() {
         return {
             searchForm: {
                 searchWord: '',
                 category: '',
             },
-            categoryList: []
+            /* categoryList: [] */
         };
     },
-    created() {
+    //异步获取分类
+    /* created() {
         api.list().then(res => { this.categoryList = res.data })
-
-
-    },
+    }, */
     methods: {
         //提交表单
         handleSubmit() {
             this.$emit('searchProduct', this.searchForm)
-            
+
         },
         //切换类目
         handleChange(val) {
